@@ -6,14 +6,14 @@ A SAP Cloud Application Programming Model (CAP) application for managing vehicle
 
 Base URL: `https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us10-001.hana.ondemand.com/odata/v4/subscription`
 
-| Endpoint | Description |
+| Description | URL |
 |---|---|
-| `/Vehicles` | List all vehicles |
-| `/Vehicles(ID='v-001')` | Get vehicle by ID |
-| `/Subscriptions` | List all subscriptions |
-| `/Subscriptions(ID='s-001')` | Get subscription by ID |
-| `/Subscriptions?$expand=vehicle` | Subscriptions with vehicle details |
-| `/$metadata` | OData metadata |
+| List all vehicles | [/Vehicles](https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us10-001.hana.ondemand.com/odata/v4/subscription/Vehicles) |
+| Get vehicle by ID | [/Vehicles(ID='v-001')](https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us10-001.hana.ondemand.com/odata/v4/subscription/Vehicles(ID='v-001')) |
+| List all subscriptions | [/Subscriptions](https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us10-001.hana.ondemand.com/odata/v4/subscription/Subscriptions) |
+| Get subscription by ID | [/Subscriptions(ID='s-001')](https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us10-001.hana.ondemand.com/odata/v4/subscription/Subscriptions(ID='s-001')) |
+| Subscriptions with vehicle details | [/Subscriptions?$expand=vehicle](https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us10-001.hana.ondemand.com/odata/v4/subscription/Subscriptions?$expand=vehicle) |
+| OData metadata | [/$metadata](https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us10-001.hana.ondemand.com/odata/v4/subscription/$metadata) |
 
 ## Project Structure
 
@@ -23,6 +23,17 @@ Base URL: `https://vehicle-subscription-tracking-srv-grateful-topi-fb.cfapps.us1
 | `srv/` | Service definition (`SubscriptionService.cds`) and business logic (`SubscriptionService.js`) |
 | `manifest-db.yml` | CF deployment manifest for the HDI deployer |
 | `manifest-srv.yml` | CF deployment manifest for the CAP service |
+
+## Demo Screenshots
+
+### List All Vehicles
+![List All Vehicles](Demo%20Screenshots/index%20vehicles%20endpoint.png)
+
+### Get Vehicle by ID
+![Get Vehicle by ID](Demo%20Screenshots/view%20vehicle%20endpoint.png)
+
+### Create Vehicle
+![Create Vehicle](Demo%20Screenshots/Create%20Vehicle%20endpoint.png)
 
 ## Data Model
 
