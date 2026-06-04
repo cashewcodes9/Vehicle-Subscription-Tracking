@@ -1,0 +1,10 @@
+---
+applications:
+- name: vehicle-subscription-tracking-srv
+  path: gen/srv
+  memory: 256M
+  buildpacks:
+    - nodejs_buildpack
+  random-route: true
+  services:
+    - vehicle-subscription-tracking-db-hdi-container

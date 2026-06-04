@@ -1,0 +1,11 @@
+---
+applications:
+- name: vehicle-subscription-tracking-db
+  path: gen/db
+  no-route: true
+  health-check-type: none
+  memory: 256M
+  buildpacks:
+    - nodejs_buildpack
+  services:
+    - vehicle-subscription-tracking-db-hdi-container
