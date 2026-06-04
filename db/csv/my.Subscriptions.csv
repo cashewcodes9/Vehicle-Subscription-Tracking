@@ -1,0 +1,6 @@
+ID,vehicle_ID,customerName,startDate,durationMonths,totalValue
+s-001,v-002,Alice Johnson,2025-01-01,12,11400.00
+s-002,v-003,Bob Smith,2025-03-15,6,4800.00
+s-003,v-005,Carol White,2025-02-01,3,3300.00
+s-004,v-001,David Brown,2025-04-10,6,2700.00
+s-005,v-002,Eva Martinez,2025-05-01,12,11400.00

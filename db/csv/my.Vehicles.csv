@@ -1,0 +1,6 @@
+ID,brand,model,monthlyRate,status
+v-001,Toyota,Corolla,450.00,available
+v-002,BMW,X5,950.00,subscribed
+v-003,Tesla,Model 3,800.00,available
+v-004,Ford,Mustang,600.00,maintenance
+v-005,Mercedes,C-Class,1100.00,subscribed
