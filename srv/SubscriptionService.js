@@ -1,18 +1,32 @@
 module.exports = (srv) => {
 
-  // Reply mock data for Vehicles...
-  srv.on('READ', 'Vehicles', () => [
-    { ID: 'v-001', brand: 'Toyota',  model: 'Corolla',   monthlyRate: 450.00, status: 'available'   },
-    { ID: 'v-002', brand: 'BMW',     model: 'X5',        monthlyRate: 950.00, status: 'subscribed'  },
-    { ID: 'v-003', brand: 'Tesla',   model: 'Model 3',   monthlyRate: 800.00, status: 'available'   },
-    { ID: 'v-004', brand: 'Ford',    model: 'Mustang',   monthlyRate: 600.00, status: 'maintenance' },
-  ])
+  const { Vehicles } = cds.entities('my')
 
-  // Reply mock data for Subscriptions...
-  srv.on('READ', 'Subscriptions', () => [
-    { ID: 's-001', vehicle_ID: 'v-002', customerName: 'Alice Johnson', startDate: '2025-01-01', durationMonths: 12, totalValue: 11400.00 },
-    { ID: 's-002', vehicle_ID: 'v-003', customerName: 'Bob Smith',     startDate: '2025-03-15', durationMonths:  6, totalValue:  4800.00 },
-    { ID: 's-003', vehicle_ID: 'v-001', customerName: 'Carol White',   startDate: '2025-06-01', durationMonths:  3, totalValue:  1350.00 },
-  ])
+  // Before creating a subscription: validate vehicle is available and auto-calculate totalValue
+  srv.before('CREATE', 'Subscriptions', async (req) => {
+    const { vehicle_ID, durationMonths } = req.data
+
+    if (!durationMonths || durationMonths < 1)
+      return req.error(400, 'Subscription must be for at least 1 month')
+
+    const tx = cds.transaction(req)
+    const [vehicle] = await tx.run(SELECT.from(Vehicles).where({ ID: vehicle_ID }))
+
+    if (!vehicle)
+      return req.error(404, 'Vehicle not found')
+    if (vehicle.status !== 'available')
+      return req.error(409, `Vehicle is not available for subscription (current status: ${vehicle.status})`)
+
+    // Auto-calculate totalValue from monthlyRate x durationMonths
+    req.data.totalValue = vehicle.monthlyRate * durationMonths
+
+    // Mark vehicle as subscribed
+    await tx.run(UPDATE(Vehicles).set({ status: 'subscribed' }).where({ ID: vehicle_ID }))
+  })
+
+  // After reading subscriptions: label long-term subscribers
+  srv.after('READ', 'Subscriptions', each => {
+    if (each.durationMonths >= 12) each.customerName += ' -- Long-term subscriber'
+  })
 
 }

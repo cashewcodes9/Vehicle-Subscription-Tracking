@@ -1,0 +1,174 @@
+{
+  "info": {
+    "name": "Vehicle Subscription Service",
+    "_postman_id": "vehicle-subscription-tracking",
+    "description": "OData V4 endpoints for the CAP SubscriptionService",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4004/subscription-service",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Metadata",
+      "item": [
+        {
+          "name": "Get Service Metadata",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/$metadata",
+            "description": "Returns OData metadata document describing all entities and their properties."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "List All Vehicles",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/Vehicles"
+          }
+        },
+        {
+          "name": "Get Vehicle by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/Vehicles(ID='v-001')"
+          }
+        },
+        {
+          "name": "Filter Vehicles by Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/Vehicles?$filter=status eq 'available'",
+              "query": [
+                { "key": "$filter", "value": "status eq 'available'" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Vehicle",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/Vehicles",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ID\": \"v-006\",\n  \"brand\": \"Audi\",\n  \"model\": \"A4\",\n  \"monthlyRate\": 750.00,\n  \"status\": \"available\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Vehicle",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/Vehicles(ID='v-006')",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"subscribed\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Vehicle",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/Vehicles(ID='v-006')"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "List All Subscriptions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/Subscriptions"
+          }
+        },
+        {
+          "name": "Get Subscription by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/Subscriptions(ID='s-001')"
+          }
+        },
+        {
+          "name": "Expand Vehicle Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/Subscriptions?$expand=vehicle",
+              "query": [
+                { "key": "$expand", "value": "vehicle" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Customer Name",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/Subscriptions?$filter=customerName eq 'Alice Johnson'",
+              "query": [
+                { "key": "$filter", "value": "customerName eq 'Alice Johnson'" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/Subscriptions",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ID\": \"s-006\",\n  \"vehicle_ID\": \"v-003\",\n  \"customerName\": \"Frank Turner\",\n  \"startDate\": \"2025-07-01\",\n  \"durationMonths\": 6,\n  \"totalValue\": 4800.00\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Subscription",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/Subscriptions(ID='s-006')",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"durationMonths\": 12,\n  \"totalValue\": 9600.00\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Subscription",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/Subscriptions(ID='s-006')"
+          }
+        }
+      ]
+    }
+  ]
+}

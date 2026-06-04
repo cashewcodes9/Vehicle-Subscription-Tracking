@@ -2,7 +2,7 @@ namespace my;
 
 // schema.cds
 entity Vehicles {
-  key ID        : UUID;
+  key ID        : String;
   brand         : String;
   model         : String;
   monthlyRate   : Decimal;
@@ -10,7 +10,7 @@ entity Vehicles {
 }
 
 entity Subscriptions {
-  key ID         : UUID;
+  key ID         : String;
   vehicle        : Association to Vehicles;
   customerName   : String;
   startDate      : Date;

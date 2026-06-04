@@ -1,5 +1,15 @@
 {
   "devDependencies": {
     "sqlite3": "^6.0.1"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": "db/vehicle-subscription-tracking.db"
+        }
+      }
+    }
   }
 }
